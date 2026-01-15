@@ -1,0 +1,31 @@
+name: 🐛 Bug Report
+description: Create a report to help us improve Airaga
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: version
+    attributes:
+      label: Airaga Version
+      description: What version of Airaga CLI are you running?
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: I ran "airaga new" but it exploded...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log Output
+      description: Please copy and paste any relevant log output.
+      render: shell

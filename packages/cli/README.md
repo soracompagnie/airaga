@@ -13,15 +13,15 @@ It provides commands for initializing new game projects and interacting with the
 ## Available Commands
 
 - `build` – Bundle the game for production (export as runnable or publishable files)
-- `dev` – Start the development mode (e.g., preview or run the game in dev environment)  
-- `generate` – Generating IFID, this concept is similar to Tweego.
-- `new <project-name>` – Create a new Airaga game project from template  
+- `dev` – Start the development mode (e.g., preview or run the game in dev environment)
+- `new <project-name>` – Create a new Airaga game project from template
 
 Each command is designed to be composable, scriptable, and consistent across environments.
 
 ## Example Usage
 
 ```bash
-npx airaga new my-text-game
+bunx airaga new my-text-game
 cd my-text-game
-npx airaga dev
+bunx airaga dev
+```
