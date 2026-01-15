@@ -1,5 +1,5 @@
-import { version } from "@cli-constants/version";
-import { Prompts } from "@cli-interfaces/prompts";
+import { version } from "@airaga/cli/constants/version";
+import { Prompts } from "@airaga/cli/types/prompts";
 
 export class Readme extends Prompts {
   public write(): void {

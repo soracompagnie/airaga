@@ -1,4 +1,4 @@
-import { Prompts } from "@cli-interfaces/prompts";
+import { Prompts } from "@airaga/cli/types/prompts";
 
 export class Dev extends Prompts {
   public async dev(): Promise<void> {

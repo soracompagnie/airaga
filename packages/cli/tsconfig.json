@@ -1,16 +1,13 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "composite": true,
     "outDir": "../../dist/cli",
-    "types": ["node"],
     "paths": {
-      "@cli-constants/*": ["constants/*"],
-      "@cli-core/*": ["core/*"],
-      "@cli-helpers/*": ["helpers/*"],
-      "@cli-interfaces/*": ["interfaces/*"]
+      "@airaga/cli/*": ["./src/*"],
     },
+    "rootDir": "src",
+    "types": ["node"],
   },
-  "include": ["**/*.ts"],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"],
+  "extends": "../../tsconfig.app.json",
 }

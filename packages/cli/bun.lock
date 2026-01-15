@@ -1,0 +1,49 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "airaga",
+      "dependencies": {
+        "@clack/prompts": "^0.11.0",
+      },
+    },
+  },
+  "packages": {
+    "@clack/core": [
+      "@clack/core@0.5.0",
+      "",
+      {
+        "dependencies": {
+          "picocolors": "^1.0.0",
+          "sisteransi": "^1.0.5"
+        }
+      },
+      "sha512-p3y0FIOwaYRUPRcMO7+dlmLh8PSRcrjuTndsiA0WAFbWES0mLZlrjVoBRZ9DzkPFJZG6KGkJmoEAY0ZcVWTkow=="
+    ],
+    "@clack/prompts": [
+      "@clack/prompts@0.11.0",
+      "",
+      {
+        "dependencies": {
+          "@clack/core": "0.5.0",
+          "picocolors": "^1.0.0",
+          "sisteransi": "^1.0.5"
+        }
+      },
+      "sha512-pMN5FcrEw9hUkZA4f+zLlzivQSeQf5dRGJjSUbvVYDLvpKCdQx5OaknvKzgbtXOizhP+SJJJjqEbOe55uKKfAw=="
+    ],
+    "picocolors": [
+      "picocolors@1.1.1",
+      "",
+      {},
+      "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="
+    ],
+    "sisteransi": [
+      "sisteransi@1.0.5",
+      "",
+      {},
+      "sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg=="
+    ],
+  }
+}
