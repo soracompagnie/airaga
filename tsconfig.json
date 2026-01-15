@@ -1,36 +1,9 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "composite": true,
-    "declaration": true,
-    "emitDeclarationOnly": false,
-    "esModuleInterop": true,
-    "lib": ["ESNext"],
-    "module": "ES2022",
-    "moduleResolution": "node",
-    "outDir": "dist",
-    "strict": true,
-    "skipLibCheck": true,
-    "target": "esnext",
-    "paths": {
-      "@cli-core/*": ["packages/cli/core/*"],
-      "@cli-constants/*": ["packages/cli/constants/*"],
-      "@cli-helpers/*": ["packages/cli/helpers/*"],
-      "@cli-interfaces/*": ["packages/cli/interfaces/*"],
-      "@main-core/*": ["packages/main/core/*"],
-      "@main-constants/*": ["packages/main/constants/*"],
-      "@main-helpers/*": ["packages/main/helpers/*"],
-      "@main-interfaces/*": ["packages/main/interfaces/*"]
-    },
-  },
-  "exclude": ["dist", "node_modules"],
-  "include": ["packages"],
+  "files": [],
+  "tsoBuild": true,
   "references": [
     { "path": "./packages/cli" },
-    { "path": "./packages/main" },
+    { "path": "./packages/parser" },
+    { "path": "./packages/runtime" },
   ],
-  "tsc-alias": {
-    "resolveFullPaths": true,
-    "resolveFullExtension": ".js",
-  }
 }

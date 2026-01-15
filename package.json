@@ -1,6 +1,6 @@
 {
   "name": "airaga",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "Rafi Abiyyu Airlangga",
   "description": "An opinionated text game written in TypeScript.",
   "license": "MIT",

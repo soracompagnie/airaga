@@ -1,5 +1,5 @@
-import { version } from "@cli-constants/version";
-import { Prompts } from "@cli-interfaces/prompts";
+import { version } from "@airaga/cli/constants/version";
+import { Prompts } from "@airaga/cli/types/prompts";
 
 export class PackageJson extends Prompts {
   public write(): boolean {
@@ -10,7 +10,7 @@ export class PackageJson extends Prompts {
     if (!hasPackageJson) {
       const content = {
         name: this.gameName === "." ? "airaga-game" : this.gameName,
-        version: "1.0.0",
+        version: `${version}`,
         main: "src/start.arg",
         type: "module",
         scripts: {

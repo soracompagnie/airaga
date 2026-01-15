@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "../../dist/cli",
+    "outDir": "../../dist/parser",
     "paths": {
-      "@airaga/cli/*": ["./src/*"],
+      "@airaga/parser/*": ["./src/*"],
     },
     "rootDir": "src",
     "types": ["node"],

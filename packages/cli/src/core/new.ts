@@ -1,9 +1,11 @@
-import { version } from "@cli-constants/version";
-import { Readme } from "@cli-helpers/readme";
-import { Config } from "@cli-interfaces/config";
-import { Prompts } from "@cli-interfaces/prompts";
-import { PackageJson } from "@cli-helpers/package-json";
-import { assetsFolder } from "@cli-helpers/paths";
+import { v4 } from "uuid";
+import { execSync } from "node:child_process";
+import { version } from "@airaga/cli/constants/version";
+import { PackageJson } from "@airaga/cli/helpers/generate-package-json";
+import { assetsFolder } from "@airaga/cli/helpers/paths";
+import { Readme } from "@airaga/cli/helpers/generate-readme";
+import { Config } from "@airaga/cli/types/config";
+import { Prompts } from "@airaga/cli/types/prompts";
 
 export class New extends Prompts {
   private readme!: Readme;
@@ -39,11 +41,11 @@ export class New extends Prompts {
 
   private async initializeFolder(gameName: string): Promise<void> {
     const init: Config = {
-      ifid: null,
+      ifid: v4(),
       name: gameName,
       description: "A new Airaga text game project.",
-      version: `"${version}"`,
-      author: "Rafi Abiyyu Airlangga",
+      version: version,
+      author: "Your Name",
     };
 
     this.fs.mkdirSync(this.path.join(this.folder, "public"), { recursive: true });
@@ -51,7 +53,7 @@ export class New extends Prompts {
     const faviconPath = this.path.resolve(assetsFolder, "favicon.ico");
 
     if (!this.fs.existsSync(faviconPath)) {
-      this.console.error("❌ Default favicon.ico not found in assets/");
+      this.console.error(`❌ Default favicon.ico not found at: ${faviconPath}`);
       this.process.exit(1);
     }
 
@@ -63,33 +65,51 @@ export class New extends Prompts {
     }
 
     this.fs.mkdirSync(this.path.join(this.folder, "src", "scene"), { recursive: true });
-    this.fs.writeFileSync(this.path.join(this.folder, "src", "scene", "1.arg"), this.dedent(
-      `
-        <scene>
-          This is the 2nd scene from your game.
-        </scene>
-      `
-    ));
 
-    this.fs.writeFileSync(this.path.join(this.folder, "airaga.config.ts"), this.dedent(
-      `
+    this.fs.writeFileSync(
+      this.path.join(this.folder, "src", "scene", "1.arg"),
+      this.dedent(
+        `
+        <scene>
+          This is the starting scene of your game.
+        </scene>
+      `,
+      ),
+    );
+
+    this.fs.writeFileSync(
+      this.path.join(this.folder, "airaga.config.ts"),
+      this.dedent(
+        `
         import type { Config } from "airaga";
 
         export const config: Config = {
-          ifid: ${null},
+          ifid: "${init.ifid}", 
           name: "${init.name}",
           description: "${init.description}",
-          version: ${init.version},
+          version: "${init.version}",
           author: "${init.author}",
         };
-      `
-    ));
+      `,
+      ),
+    );
 
-    // Buat file .gitignore
-    this.fs.writeFileSync(this.path.join(this.folder, ".gitignore"), `/node_modules`);
+    this.fs.writeFileSync(this.path.join(this.folder, ".gitignore"), "node_modules\ndist\n.env");
 
-    // Buat package.json dan README.md
+    // Create package.json and README.md
     this.packageJson.write();
     this.readme.write();
+
+    try {
+      execSync("git init", { cwd: this.folder, stdio: "ignore" });
+      this.console.log("✅ Initialized empty Git repository.");
+      this.console.log(`\n🎉 Project "${gameName}" has been successfully created!`);
+      this.console.log(`\nNext steps:`);
+      this.console.log(`  cd ${gameName}`);
+      this.console.log(`  bun install`);
+      this.console.log(`  bun airaga dev\n`);
+    } catch (err: unknown) {
+      this.console.error(`❌ Failed to initialize git: ${(err as Error).message}`);
+    }
   }
 }
