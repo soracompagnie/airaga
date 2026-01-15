@@ -1,19 +1,20 @@
-import js from "@eslint/js";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsparser from "@typescript-eslint/parser";
+import { configs as js } from "@eslint/js";
+import { defineConfig } from "eslint/config";
+import { node } from "globals";
+import { configs as ts } from "typescript-eslint";
 
-export default [
-  js.configs.recommended,
+export default defineConfig([
+  js.recommended,
+  ...ts.recommended,
   {
     files: ["**/*.ts"],
     languageOptions: {
-      parser: tsparser,
-      parserOptions: { project: "./tsconfig.json" },
-    },
-    plugins: { "@typescript-eslint": tseslint },
-    linterOptions: {
-      env: {
-        node: true,
+      ecmaVersion: 2022,
+      sourceType: "module",
+      globals: { ...node },
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     rules: {
@@ -24,4 +25,5 @@ export default [
       "@typescript-eslint/strict-boolean-expressions": "warn",
     },
   },
-];
+  { ignores: ["dist", "node_modules", "coverage", "eslint.config.ts"] },
+]);
