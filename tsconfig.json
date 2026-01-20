@@ -3,6 +3,7 @@
   "tsoBuild": true,
   "references": [
     { "path": "./packages/cli" },
+    { "path": "./packages/media" },
     { "path": "./packages/parser" },
     { "path": "./packages/runtime" },
   ],

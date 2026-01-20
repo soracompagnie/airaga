@@ -1,4 +1,4 @@
-import { version } from "@airaga/cli/constants/version";
+import { VERSION } from "@airaga/cli/constants/version";
 import { Prompts } from "@airaga/cli/types/prompts";
 
 export class Readme extends Prompts {
@@ -13,7 +13,7 @@ export class Readme extends Prompts {
 
         - **IFID**: <ifid>
         - **Description**: A new Airaga text game project.
-        - **Version**: ${version}
+        - **Version**: ${VERSION}
         - **Author**: [Your Name Here]
 
         ## 🏗 Project Structure
@@ -71,7 +71,7 @@ export class Readme extends Prompts {
           ifid: "<ifid>",
           name: "New Text Game",
           description: "A new Airaga text game project.",
-          version: "${version}",
+          version: "${VERSION}",
           author: "",
           fonts: () => Roboto({
             subsets: ["latin"],

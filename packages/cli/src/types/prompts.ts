@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-vars */
-
 import type { Dedent } from "dedent";
-import type { PlatformPath } from "node:path";
+import type path from "node:path";
 
 export type BaseCommands = "build" | "dev" | "generate" | "new";
 export type FileSystem = typeof import("node:fs");
@@ -15,10 +13,10 @@ export abstract class Prompts {
   public dedent!: Dedent;
   public fs!: FileSystem;
   public gameName!: string;
-  public path!: PlatformPath;
+  public path!: typeof path;
   public process!: typeof import("node:process");
 
-  public context(ctx: Partial<Prompts>) {
+  public context(ctx: Partial<Prompts>): void {
     Object.assign(this, ctx);
   }
 

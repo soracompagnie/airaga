@@ -1,0 +1,16 @@
+{
+  "name": "@airaga/parser",
+  "version": "0.1.0",
+  "main": "./dist/parser/index.js",
+  "types": "./dist/parser/index.d.ts",
+  "bin": {
+    "@airaga/parser": "./dist/parser/index.js"
+  },
+  "files": ["assets", "dist"],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

@@ -28,10 +28,11 @@
     "vitest": "^3.2.4"
   },
   "scripts": {
-    "build": "tsc --build && tsc-alias -p tsconfig.json && tsx scripts/copy-assets.ts",
+    "build": "tsc --build && bun tsc-alias",
     "knip": "knip",
     "lint": "eslint . --fix --ext .ts",
     "prettier": "prettier --write .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "tsc-alias": "tsc-alias -p packages/cli/tsconfig.json && tsc-alias -p packages/parser/tsconfig.json"
   }
 }

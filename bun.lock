@@ -41,10 +41,35 @@
         "@types/uuid": "^10.0.0",
       },
     },
+    "packages/media": {
+      "name": "media",
+      "devDependencies": {
+        "@types/bun": "latest",
+      },
+      "peerDependencies": {
+        "typescript": "^5",
+      },
+    },
+    "packages/parser": {
+      "name": "@airaga/parser",
+      "version": "0.1.0",
+      "bin": {
+        "@airaga/parser": "./dist/parser/index.js",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+      },
+      "peerDependencies": {
+        "typescript": "^5",
+      },
+    },
   },
   "packages": {
     "@airaga/cli": [
       "@airaga/cli@workspace:packages/cli"
+    ],
+    "@airaga/parser": [
+      "@airaga/parser@workspace:packages/parser"
     ],
     "@asamuzakjp/css-color": [
       "@asamuzakjp/css-color@3.2.0",
@@ -2220,6 +2245,9 @@
         }
       },
       "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ=="
+    ],
+    "media": [
+      "media@workspace:packages/media"
     ],
     "merge2": [
       "merge2@1.4.1",

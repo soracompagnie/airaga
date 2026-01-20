@@ -1,4 +1,4 @@
-import { version } from "@airaga/cli/constants/version";
+import { VERSION } from "@airaga/cli/constants/version";
 import { Prompts } from "@airaga/cli/types/prompts";
 
 export class PackageJson extends Prompts {
@@ -10,7 +10,7 @@ export class PackageJson extends Prompts {
     if (!hasPackageJson) {
       const content = {
         name: this.gameName === "." ? "airaga-game" : this.gameName,
-        version: `${version}`,
+        version: `${VERSION}`,
         main: "src/start.arg",
         type: "module",
         scripts: {
@@ -18,9 +18,10 @@ export class PackageJson extends Prompts {
           dev: "airaga dev",
         },
         devDependencies: {
-          airaga: `^${version}`,
+          "@airaga/cli": `^${VERSION}`,
           "@types/node": "latest",
-          typescript: "latest",
+          "airaga": `^${VERSION}`,
+          "typescript": "latest",
         },
         license: "MIT",
         types: "airaga.config.ts",
