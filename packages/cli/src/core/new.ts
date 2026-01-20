@@ -52,7 +52,7 @@ export class New extends Prompts {
 
     const faviconPath = this.path.resolve(assetsFolder, "favicon.ico");
 
-    if (!this.fs.existsSync(faviconPath)) {
+    if (this.fs.existsSync(faviconPath) === false) {
       this.console.error(`❌ Default favicon.ico not found at: ${faviconPath}`);
       this.process.exit(1);
     }

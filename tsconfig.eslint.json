@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+  },
+  "extends": "./tsconfig.json",
+  "include": [
+    "eslint.config.ts",
+    "vitest.config.ts",
+    "packages/*/index.ts",
+    "packages/*/src/**/*.ts",
+    "packages/*/__test__/**/*.ts",
+  ],
+}
