@@ -1,14 +1,14 @@
-type ChoiceAttributes = {
+interface ChoiceAttributes {
   label: string;
   next: string;
   condition?: string;
-};
+}
 
-type ElementAttributes = {
+interface ElementAttributes {
   type: string;
   props?: Record<string, string | unknown>;
   children?: ElementAttributes[] | string;
-};
+}
 
 export interface AiragaElements {
   /**

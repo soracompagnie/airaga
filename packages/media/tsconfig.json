@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "../../dist/media",
+    "paths": {
+      "@airaga/media/*": ["./src/*"],
+    },
+    "rootDir": "src",
+    "types": ["node"],
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"],
+  "extends": "../../tsconfig.app.json",
+}

@@ -13,7 +13,7 @@ export default defineConfig([
       sourceType: "module",
       globals: { ...node },
       parserOptions: {
-        projectService: true,
+        project: ["tsconfig.eslint.json"],
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -22,7 +22,7 @@ export default defineConfig([
       "@typescript-eslint/explicit-function-return-type": "warn",
       "@typescript-eslint/explicit-module-boundary-types": "warn",
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-      "@typescript-eslint/strict-boolean-expressions": "warn",
+      "@typescript-eslint/strict-boolean-expressions": "off",
     },
   },
   { ignores: ["dist", "node_modules", "coverage", "eslint.config.ts"] },

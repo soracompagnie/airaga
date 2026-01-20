@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  # Trigger on push to main branch
+  push:
+    branches: ["main"]
+  # Trigger on Pull Requests targeting main branch
+  pull_request:
+    branches: ["main"]
+
+# Cancel previous runs if a new commit is pushed to save resources
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Setup Bun runtime
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # 3. Install dependencies using frozen lockfile (for consistency)
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      # 4. Check for code style/linting errors
+      - name: Lint Code
+        run: bun run lint
+
+      # 5. Build the project (TypeScript compilation)
+      - name: Build Project
+        run: bun run build
+
+      # 6. Run unit tests
+      - name: Run Tests
+        run: bun run test

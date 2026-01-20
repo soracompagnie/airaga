@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { execSync } from "node:child_process";
-import { version } from "@airaga/cli/constants/version";
+import { VERSION } from "@airaga/cli/constants/version";
 import { PackageJson } from "@airaga/cli/helpers/generate-package-json";
 import { assetsFolder } from "@airaga/cli/helpers/paths";
 import { Readme } from "@airaga/cli/helpers/generate-readme";
@@ -44,7 +44,7 @@ export class New extends Prompts {
       ifid: v4(),
       name: gameName,
       description: "A new Airaga text game project.",
-      version: version,
+      version: VERSION,
       author: "Your Name",
     };
 
@@ -52,7 +52,7 @@ export class New extends Prompts {
 
     const faviconPath = this.path.resolve(assetsFolder, "favicon.ico");
 
-    if (!this.fs.existsSync(faviconPath)) {
+    if (this.fs.existsSync(faviconPath) === false) {
       this.console.error(`❌ Default favicon.ico not found at: ${faviconPath}`);
       this.process.exit(1);
     }

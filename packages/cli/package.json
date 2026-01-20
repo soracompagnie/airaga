@@ -4,7 +4,7 @@
   "main": "./dist/cli/index.js",
   "types": "./dist/cli/index.d.ts",
   "bin": {
-    "airaga": "./dist/cli/index.js"
+    "@airaga/cli": "./dist/cli/index.js"
   },
   "files": ["assets", "dist"],
   "dependencies": {

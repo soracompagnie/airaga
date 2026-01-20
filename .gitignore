@@ -132,3 +132,12 @@ dist
 
 # SvelteKit build / generate output
 .svelte-kit
+
+### Another ###
+.DS_Store
+.idea
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
