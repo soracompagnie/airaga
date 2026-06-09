@@ -1,8 +1,6 @@
 {
   "name": "@airaga/parser",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "main": "./dist/index.js",
   "private": true,
   "types": "./dist/index.d.ts",
