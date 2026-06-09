@@ -9,6 +9,9 @@
   "type": "module",
   "version": "0.1.0",
   "workspaces": ["packages/*"],
+  "bin": {
+    "airaga": "./packages/cli/src/index.js"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "@eslint/js": "^10.0.1",
