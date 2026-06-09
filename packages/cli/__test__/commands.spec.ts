@@ -1,8 +1,8 @@
-import { New } from "../src/core/new.js";
 import { faker } from "@faker-js/faker";
 import { cwd } from "node:process";
 import { setTimeout } from "node:timers";
 import { describe, expect, it, vi } from "vitest";
+import { New } from "../src/core/new.js";
 import dedent from "dedent";
 import * as fs from "node:fs";
 import * as path from "node:path";

@@ -1,7 +1,11 @@
 {
-  "compilerOptions": {
-    "types": ["jest", "node"],
-  },
   "extends": "./tsconfig.json",
-  "include": ["src/**/*", "tests/**/*", "**/*.spec.ts"],
+  "compilerOptions": {
+    "rootDir": ".", 
+    "paths": {
+      "@airaga/media/*": ["./src/*"],
+    },
+    "types": ["vitest", "node"],
+  },
+  "include": ["src/**/*", "**/*.spec.ts"]
 }

@@ -6,7 +6,7 @@ export class Parser {
   /**
    * Set of self-closing or void elements that cannot have children.
    */
-  private static readonly VOID_ELEMENTS = new Set(["input", "img", "br", "checkbox", "audio"]);
+  private static readonly VOID_ELEMENTS = new Set(["input", "img", "br", "checkbox", "audio", "video"]);
 
   /**
    * Parses a raw attributes string into an ArgAttributes object.
