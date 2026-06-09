@@ -2,6 +2,7 @@
   "name": "@airaga/cli",
   "version": "0.1.0",
   "main": "./dist/cli/index.js",
+  "type": "module",
   "types": "./dist/cli/index.d.ts",
   "bin": {
     "@airaga/cli": "./dist/cli/index.js"

@@ -1,4 +1,4 @@
-import type { AiragaNode, AiragaNodeProps, NodeType } from "@airaga/parser/types/ast";
+import type { AiragaNode, AiragaNodeProps, NodeType } from "@airaga/parser/types/ast.js";
 
 export class Heading {
   private static create(type: NodeType, content: string, props?: AiragaNodeProps): AiragaNode {

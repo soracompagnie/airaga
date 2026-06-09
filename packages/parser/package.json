@@ -2,6 +2,7 @@
   "name": "@airaga/parser",
   "version": "0.1.0",
   "main": "./dist/parser/index.js",
+  "type": "module",
   "types": "./dist/parser/index.d.ts",
   "bin": {
     "@airaga/parser": "./dist/parser/index.js"

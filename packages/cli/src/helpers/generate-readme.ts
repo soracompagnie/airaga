@@ -1,6 +1,11 @@
-import { VERSION } from "@airaga/cli/constants/version";
-import { Prompts } from "@airaga/cli/types/prompts";
+import { VERSION } from "@airaga/cli/constants/version.js";
+import { Prompts } from "@airaga/cli/types/prompts.js";
 
+/**
+ * @description Generates a README.md file for the Airaga game project.
+ * @extends Prompts
+ * @returns {void}
+ */
 export class Readme extends Prompts {
   public write(): void {
     return this.fs.writeFileSync(this.path.join(this.folder, "README.md"), this.dedent(
@@ -23,9 +28,11 @@ export class Readme extends Prompts {
         - \`src\`
           - \`items\`
             - \`character.arg\`
+          - \`menu\`
+            - \`options.arg\`
+            - \`start.arg\`
           - \`scene\`
             - \`1.arg\`
-          - \`start.arg\`
         - \`.gitignore\`
         - \`airaga.config.ts\`
         - \`package.json\`

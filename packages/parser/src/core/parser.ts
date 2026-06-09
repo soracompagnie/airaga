@@ -1,7 +1,7 @@
-import { attributeRegex } from "@airaga/parser/constants/attributes";
-import { Form } from "@airaga/parser/core/form";
-import { Heading } from "@airaga/parser/core/heading";
-import type { AiragaNode, AiragaNodeProps, NodeType } from "@airaga/parser/types/ast";
+import { attributeRegex } from "@airaga/parser/constants/attributes.js";
+import { Form } from "@airaga/parser/core/form.js";
+import { Heading } from "@airaga/parser/core/heading.js";
+import type { AiragaNode, AiragaNodeProps, NodeType } from "@airaga/parser/types/ast.js";
 
 export class Parser {
   /**

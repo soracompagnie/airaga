@@ -25,7 +25,7 @@ npm install
 
 ### 2. Start Writing
 
-Edit scenes inside the `src/scene/` folder. Your entry point is `src\start.arg`.
+Edit scenes inside the `src/scene/` folder. Your entry point is `src\menu\start.arg`.
 
 ### 3. Run the Game
 
@@ -41,9 +41,8 @@ npm run start
 my-text-game/
 ├── public/           # Static assets
 ├── src/
-│   ├── items/        # Game items and objects
+│   ├── menu/         # Menu options
 │   ├── scene/        # Game scenes
-│   └── start.arg     # Entry scene
 ├── .gitignore
 ├── airaga.config.ts
 ├── package.json

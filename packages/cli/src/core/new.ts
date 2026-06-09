@@ -1,12 +1,22 @@
+import { VERSION } from "@airaga/cli/constants/version.js";
+import { PackageJson } from "@airaga/cli/helpers/generate-package-json.js";
+import { Readme } from "@airaga/cli/helpers/generate-readme.js";
+import { Config } from "@airaga/cli/types/config.js";
+import { Prompts } from "@airaga/cli/types/prompts.js";
 import { v4 } from "uuid";
 import { execSync } from "node:child_process";
-import { VERSION } from "@airaga/cli/constants/version";
-import { PackageJson } from "@airaga/cli/helpers/generate-package-json";
-import { assetsFolder } from "@airaga/cli/helpers/paths";
-import { Readme } from "@airaga/cli/helpers/generate-readme";
-import { Config } from "@airaga/cli/types/config";
-import { Prompts } from "@airaga/cli/types/prompts";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
+/**
+ * @description - Handles the creation of a new Airaga text game project, including folder structure,
+ *                configuration, and initial files. It also initializes a Git repository for version control.
+ * @example
+ * ```bash
+ * bun airaga new my-text-game
+ * ```
+ * @extends Prompts
+ */
 export class New extends Prompts {
   private readme!: Readme;
   private packageJson!: PackageJson;
@@ -24,7 +34,6 @@ export class New extends Prompts {
       this.fs.mkdirSync(this.folder, { recursive: true });
     }
 
-    // Helper initialization
     const ctx = {
       console: this.console,
       dedent: this.dedent,
@@ -50,7 +59,8 @@ export class New extends Prompts {
 
     this.fs.mkdirSync(this.path.join(this.folder, "public"), { recursive: true });
 
-    const faviconPath = this.path.resolve(assetsFolder, "favicon.ico");
+    const __dirname = this.path.dirname(fileURLToPath(import.meta.url));
+    const faviconPath = this.path.resolve(resolve(__dirname, "../../assets"), "favicon.ico");
 
     if (this.fs.existsSync(faviconPath) === false) {
       this.console.error(`❌ Default favicon.ico not found at: ${faviconPath}`);
@@ -64,7 +74,30 @@ export class New extends Prompts {
       this.process.exit(1);
     }
 
+    this.fs.mkdirSync(this.path.join(this.folder, "src", "menu"), { recursive: true });
     this.fs.mkdirSync(this.path.join(this.folder, "src", "scene"), { recursive: true });
+
+    this.fs.writeFileSync(
+      this.path.join(this.folder, "src", "menu", "start.arg"),
+      this.dedent(
+        `
+        <menu>
+          This is the main menu of your game.
+        </menu>
+        `,
+      ),
+    );
+
+    this.fs.writeFileSync(
+      this.path.join(this.folder, "src", "menu", "options.arg"),
+      this.dedent(
+        `
+        <menu>
+          This is the options menu of your game.
+        </menu>
+        `,
+      ),
+    );
 
     this.fs.writeFileSync(
       this.path.join(this.folder, "src", "scene", "1.arg"),
