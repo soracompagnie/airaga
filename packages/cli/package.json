@@ -1,10 +1,10 @@
 {
   "name": "@airaga/cli",
-  "files": ["dist"],
+  "files": ["assets", "dist"],
   "main": "./dist/index.js",
   "type": "module",
   "types": "./dist/index.d.ts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "bin": {
     "airaga": "./dist/index.js"
   },
