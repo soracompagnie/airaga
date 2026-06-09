@@ -1,15 +1,19 @@
 {
   "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "outDir": "./dist",
     "paths": {
       "@airaga/media/*": ["./src/*"],
+      "@airaga/parser/*": ["../parser/src/*", "../parser/*"]
     },
     "rootDir": "src",
     "types": ["node"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
   },
-  "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"],
   "extends": "../../tsconfig.app.json",
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../parser" }
+  ]
 }

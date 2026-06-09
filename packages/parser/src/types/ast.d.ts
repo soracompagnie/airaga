@@ -50,7 +50,8 @@ export type ArgNodeType =
   | "span"
   | "textarea"
   | "u"
-  | "ul";
+  | "ul"
+  | "video";
 
 /**
  * @description Defines the attributes that can be associated with an Airaga tags.

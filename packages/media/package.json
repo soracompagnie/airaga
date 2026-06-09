@@ -2,6 +2,7 @@
   "name": "@airaga/media",
   "version": "0.1.0",
   "main": "./dist/media/index.js",
+  "type": "module",
   "types": "./dist/media/index.d.ts",
   "bin": {
     "@airaga/media": "./dist/media/index.js"

@@ -11,10 +11,7 @@ export class Scene {
    * @returns {ArgNode}
    * @example <scene id="start">...</scene>
    */
-  public static scene(
-    props?: ArgAttributes,
-    children: ArgNode[] = [],
-  ): ArgNode {
+  public static scene(props?: ArgAttributes, children: ArgNode[] = []): ArgNode {
     return createNode("scene", "", props, children);
   }
 
