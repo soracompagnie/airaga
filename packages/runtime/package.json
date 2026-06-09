@@ -1,20 +1,17 @@
 {
-  "name": "@airaga/parser",
+  "name": "@airaga/runtime",
+  "main": "./dist/index.js",
+  "private": true,
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "0.1.2",
   "files": [
     "dist"
   ],
-  "main": "./dist/index.js",
-  "private": true,
-  "types": "./dist/index.d.ts",
-  "type": "module",
-  "version": "0.1.2",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

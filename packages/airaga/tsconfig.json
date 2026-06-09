@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "paths": {
-      "@airaga/runtime/*": ["./src/*"],
+      "airaga/*": ["./src/*"],
     },
     "rootDir": "src",
     "types": ["node"],
