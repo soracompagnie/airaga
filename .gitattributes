@@ -1,0 +1,7 @@
+# Merge the CHANGELOG.md file by concatenating the changes from both branches
+# instead of trying to merge them line by line, which can lead to conflicts.
+CHANGELOG.md merge=union
+
+# Treat the `bun.lock` file as binary to prevent merge conflicts, as it is a `lock` file
+# that should not be manually edited.
+bun.lock binary
