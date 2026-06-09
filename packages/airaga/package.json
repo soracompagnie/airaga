@@ -1,0 +1,17 @@
+{
+  "name": "airaga",
+  "main": "./dist/index.js",
+  "private": true,
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "0.1.2",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
