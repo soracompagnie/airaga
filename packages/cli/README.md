@@ -34,7 +34,7 @@ You don't need to install the CLI globally. The recommended way to use Airaga is
 To scaffold a new Airaga text game, run the `new` command:
 
 ```bash
-bunx @airaga/cli new my-text-game
+bunx airaga new my-text-game
 cd my-text-game
 ```
 
@@ -43,7 +43,7 @@ cd my-text-game
 Once inside your project directory, start the local development server:
 
 ```bash
-bunx @airaga/cli dev
+bunx airaga dev
 ```
 
 ## 🛠️ Available Commands
