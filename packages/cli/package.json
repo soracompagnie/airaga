@@ -1,13 +1,13 @@
 {
   "name": "@airaga/cli",
-  "version": "0.1.0",
-  "main": "./dist/cli/index.js",
+  "files": ["dist"],
+  "main": "./dist/index.js",
   "type": "module",
-  "types": "./dist/cli/index.d.ts",
+  "types": "./dist/index.d.ts",
+  "version": "0.1.1",
   "bin": {
-    "@airaga/cli": "./dist/cli/index.js"
+    "airaga": "./dist/index.js"
   },
-  "files": ["assets", "dist"],
   "dependencies": {
     "@clack/prompts": "^0.11.0",
     "dedent": "^1.6.0",
@@ -16,5 +16,8 @@
   "devDependencies": {
     "@types/node": "latest",
     "@types/uuid": "^10.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

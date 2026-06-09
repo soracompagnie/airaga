@@ -1,17 +1,17 @@
 {
   "name": "@airaga/media",
-  "version": "0.1.0",
-  "main": "./dist/media/index.js",
+  "main": "./dist/index.js",
   "type": "module",
-  "types": "./dist/media/index.d.ts",
-  "bin": {
-    "@airaga/media": "./dist/media/index.js"
-  },
-  "files": ["assets", "dist"],
+  "types": "./dist/index.d.ts",
+  "version": "0.1.1",
+  "files": ["dist"],
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

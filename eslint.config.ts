@@ -25,5 +25,5 @@ export default defineConfig([
       "@typescript-eslint/strict-boolean-expressions": "off",
     },
   },
-  { ignores: ["dist", "node_modules", "coverage", "eslint.config.ts"] },
+  { ignores: ["**/dist/**",  "node_modules/**",  "coverage/**",  "eslint.config.ts"] },
 ]);
