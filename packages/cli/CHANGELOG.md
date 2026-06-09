@@ -1,5 +1,11 @@
 # @airaga/cli
 
+## 0.1.4
+
+### Patch Changes
+
+- chore: Add faker to dependency
+
 ## 0.1.3
 
 ### Patch Changes
