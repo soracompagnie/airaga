@@ -1,6 +1,11 @@
-import { VERSION } from "@airaga/cli/constants/version";
-import { Prompts } from "@airaga/cli/types/prompts";
+import { VERSION } from "@airaga/cli/constants/version.js";
+import { Prompts } from "@airaga/cli/types/prompts.js";
 
+/**
+ * @description Generates a package.json file for the Airaga game project. If a package.json file already exists, it will not overwrite it and will return true. If it creates a new package.json file, it will return false.
+ * @extends Prompts
+ * @returns {boolean}
+ */
 export class PackageJson extends Prompts {
   public write(): boolean {
     const file = this.path.join(this.folder, "package.json");
@@ -11,7 +16,6 @@ export class PackageJson extends Prompts {
       const content = {
         name: this.gameName === "." ? "airaga-game" : this.gameName,
         version: `${VERSION}`,
-        main: "src/start.arg",
         type: "module",
         scripts: {
           build: "airaga build",

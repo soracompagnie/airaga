@@ -1,20 +1,22 @@
-import { attributeRegex } from "@airaga/parser/constants/attributes";
-import { Form } from "@airaga/parser/core/form";
-import { Heading } from "@airaga/parser/core/heading";
-import type { AiragaNode, AiragaNodeProps, NodeType } from "@airaga/parser/types/ast";
+import { attributeRegex } from "@airaga/parser/constants/attributes.js";
+import { createNode } from "@airaga/parser/helpers/create-node.js";
+import type { ArgAttributes, ArgNode, ArgNodeType } from "@airaga/parser/types/ast.js";
 
 export class Parser {
   /**
-   * Parses raw attributes string into a props object.
-   * Example input: ' class="text-red-500" id="title"'
-   * Output: { className: "text-red-500", id: "title" }
+   * Set of self-closing or void elements that cannot have children.
    */
-  private static parseAttributes(attributes: string): AiragaNodeProps {
-    const props: AiragaNodeProps = {};
+  private static readonly VOID_ELEMENTS = new Set(["input", "img", "br", "checkbox", "audio", "video"]);
 
-    // Regex to match key="value" pattern
-    
-    let match;
+  /**
+   * Parses a raw attributes string into an ArgAttributes object.
+   * @param {string} attributes - Raw string of HTML-like attributes.
+   * @returns {ArgAttributes} Parsed attributes object.
+   */
+  private static parseAttributes(attributes: string): ArgAttributes {
+    const props: ArgAttributes = {};
+    let match: RegExpExecArray | null;
+    attributeRegex.lastIndex = 0;
 
     while ((match = attributeRegex.exec(attributes)) !== null) {
       const key = match[1] || match[3] || match[5];
@@ -32,91 +34,65 @@ export class Parser {
   }
 
   /**
-   * @param text
-   * @returns normalized text with single spaces and trimmed ends
+   * Parses a raw string from an .arg file into an Abstract Syntax Tree (AST)
+   * using a stack-based approach.
+   * @param {string} input - The raw string content from the file.
+   * @returns {ArgNode[]} An array of ArgNode objects representing the root elements.
    */
-  private static normalizeWhitespace(text: string): string {
-    return text.replace(/\s+/g, " ").trim();
-  }
+  public static parse(input: string): ArgNode[] {
+    const rootNodes: ArgNode[] = [];
+    const stack: ArgNode[] = [];
 
-  /**
-   * Parses a raw string from an .arg file into an Abstract Syntax Tree (AST).
-   * * @param input - The raw string content from the file.
-   * @returns An array of AiragaNode objects.
-   * * @example
-   * ```ts
-   * const nodes = Parser.parse('<h1 class="text-bold">Title</h1>');
-   * ```
-   */
-  public static parse(input: string): AiragaNode[] {
-    const nodes: AiragaNode[] = [];
+    /**
+     * Regex capture groups:
+     * 1: Closing slash (if any) -> /
+     * 2: Tag name               -> scene, h1, input
+     * 3: Attributes string      -> name="hero" mood="happy"
+     * 4: Self-closing slash     -> /
+     */
+    const tagRegex = /<(\/)?([a-zA-Z0-9-]+)([^>]*?)(\/?)>/g;
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
 
-    // Regex Explanation:
-    // <(h[1-6]|p)   -> Capture opening tag type (Group 1)
-    // ([^>]*)       -> Capture attributes string (Group 2)
-    // >(.*?)<\/\1>  -> Capture content (Group 3) & ensure matching closing tag
-    const regex = /<(h[1-6]|p|b|i|u|s|pre|input|select|radio|option|button)([^>]*)>(.*?)<\/\1>/gs;
-    let match;
+    while ((match = tagRegex.exec(input)) !== null) {
+      const textContent = input.slice(lastIndex, match.index);
+      const normalizedText = textContent.replace(/\s+/g, " ").trim();
 
-    while ((match = regex.exec(input)) !== null) {
-      const props = this.parseAttributes(match[2].trim());
-      const content = this.normalizeWhitespace(match[3]);
-
-      switch (match[1] as NodeType) {
-        case "h1":
-          nodes.push(Heading.h1(content, props));
-          break;
-        case "h2":
-          nodes.push(Heading.h2(content, props));
-          break;
-        case "h3":
-          nodes.push(Heading.h3(content, props));
-          break;
-        case "h4":
-          nodes.push(Heading.h4(content, props));
-          break;
-        case "h5":
-          nodes.push(Heading.h5(content, props));
-          break;
-        case "h6":
-          nodes.push(Heading.h6(content, props));
-          break;
-        case "p":
-          nodes.push(Heading.p(content, props));
-          break;
-        case "b":
-          nodes.push(Heading.b(content, props));
-          break;
-        case "i":
-          nodes.push(Heading.i(content, props));
-          break;
-        case "u":
-          nodes.push(Heading.u(content, props));
-          break;
-        case "s":
-          nodes.push(Heading.s(content, props));
-          break;
-        case "pre":
-          nodes.push(Heading.pre(content, props));
-          break;
-        case "button":
-          nodes.push(Form.button(content, props));
-          break;
-        case "input":
-          nodes.push(Form.input(content, props));
-          break;
-        case "option":
-          nodes.push(Form.option(content, props));
-          break;
-        case "select":
-          nodes.push(Form.select(props, this.parse(match[3])));
-          break;
-        case "radio":
-          nodes.push(Form.radio(props, this.parse(match[3])));
-          break;
+      if (normalizedText && stack.length > 0) {
+        const parent = stack[stack.length - 1];
+        parent.content = parent.content ? `${parent.content} ${normalizedText}` : normalizedText;
       }
+
+      const isClosingTag = !!match[1];
+      const tagName = match[2].toLowerCase() as ArgNodeType;
+      const attributes = match[3].trim();
+      const isExplicitlySelfClosing = !!match[4];
+      const isVoidElement = this.VOID_ELEMENTS.has(tagName) || isExplicitlySelfClosing;
+
+      if (isClosingTag) {
+        stack.pop();
+        lastIndex = tagRegex.lastIndex;
+        continue;
+      }
+
+      const props = this.parseAttributes(attributes);
+      const node = createNode(tagName, "", props, []);
+
+      if (stack.length > 0) {
+        const parent = stack[stack.length - 1];
+        parent.children ??= [];
+        parent.children.push(node);
+      } else {
+        rootNodes.push(node);
+      }
+
+      if (!isVoidElement) {
+        stack.push(node);
+      }
+
+      lastIndex = tagRegex.lastIndex;
     }
 
-    return nodes;
+    return rootNodes;
   }
 }

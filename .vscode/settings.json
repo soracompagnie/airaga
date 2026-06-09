@@ -1,4 +1,5 @@
 {
+  "editor.formatOnSave": true,
   "prettier.configPath": "./.prettierrc",
   "tailwindCSS.lint.invalidConfigPath": "ignore",
   "json.schemas": [
@@ -9,5 +10,8 @@
       }
     }
   ],
-  "java.compile.nullAnalysis.mode": "disabled"
+  "material-icon-theme.folders.associations": {
+    "parser": "temp",
+    "runtime": "generator",
+  }
 }

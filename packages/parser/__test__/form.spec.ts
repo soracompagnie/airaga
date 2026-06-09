@@ -1,17 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { Parser } from "../src/core/parser";
-import type { AiragaNode } from "../src/types/ast";
+import type { ArgNode } from "../src/types/ast";
 
 describe("Airaga Parsing Form", () => {
-  it("Should parse input element with label", () => {
-    const input = `<input name="heroName" placeholder="Ex: Arthur">Enter your Hero's name:</input>`;
+  it("Should parse input element (as Void Element)", () => {
+    const input = `<input name="heroName" placeholder="Ex: Arthur" />`;
     const parsed = Parser.parse(input);
 
-    expect(parsed[0]).toEqual<AiragaNode>({
+    expect(parsed[0]).toEqual<ArgNode>({
       type: "input",
-      content: "Enter your Hero's name:",
+      content: "",
       props: { name: "heroName", placeholder: "Ex: Arthur" },
-      children: undefined,
+      children: [],
     });
   });
 
@@ -26,14 +26,14 @@ describe("Airaga Parsing Form", () => {
     const parsed = Parser.parse(input);
 
     expect(parsed[0].type).toBe("select");
-    expect(parsed[0].props).toEqual({ name: "heroClass" });
-
+    expect(parsed[0].props).toEqual<ArgNode["props"]>({ name: "heroClass" });
     expect(parsed[0].children).toHaveLength(2);
-    expect(parsed[0].children?.[0]).toEqual<AiragaNode>({
+
+    expect(parsed[0].children?.[0]).toEqual<ArgNode>({
       type: "option",
       content: "Warrior",
       props: { value: "warrior" },
-      children: undefined,
+      children: [],
     });
   });
 
@@ -48,7 +48,7 @@ describe("Airaga Parsing Form", () => {
     const parsed = Parser.parse(input);
 
     expect(parsed[0].type).toBe("radio");
-    expect(parsed[0].props).toEqual<AiragaNode["props"]>({ name: "gender" });
+    expect(parsed[0].props).toEqual<ArgNode["props"]>({ name: "gender" });
     expect(parsed[0].children).toHaveLength(2);
     expect(parsed[0].children?.[1].content).toBe("Female");
   });

@@ -1,10 +1,24 @@
-import { intro, outro, text, select, isCancel, cancel } from "@clack/prompts";
+import { New } from "@airaga/cli/core/new.js";
+import { cancel, intro, isCancel, outro, select, text } from "@clack/prompts";
+import { faker } from "@faker-js/faker";
 import { argv } from "node:process";
-import { New } from "@airaga/cli/core/new";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import dedent from "dedent";
 
+/**
+ * @description Main CLI class that handles user interactions and commands for the Airaga game engine.
+ *              It supports commands like "new" for creating a new project and "dev" for starting the
+ *              development server.
+ * @example
+ * ```bash
+ * # Create a new project
+ * bunx airaga new my-awesome-game
+ *
+ * # Start development server
+ * bunx airaga dev
+ * ```
+ */
 export class Cli {
   private args = argv.slice(2);
   private command = this.args[0];
@@ -56,21 +70,20 @@ export class Cli {
         await this.createNewProject();
         break;
       case "dev":
-        console.log("🚧 Dev mode not implemented yet.");
+        console.log("🚧 Development mode not implemented yet.");
         break;
     }
   }
 
   private async createNewProject(): Promise<void> {
+    const defaultName = faker.word.words({ count: { min: 3, max: 7 } }).toLowerCase().replace(/\s+/g, "-");
     let name = this.argument;
 
     if (!name) {
       const response = await text({
         message: "What is the name of your game?",
-        placeholder: "my-awesome-rpg",
-        validate(value) {
-          if (value.length === 0) return `Name is required!`;
-        },
+        placeholder: defaultName,
+        defaultValue: defaultName,
       });
 
       if (isCancel(response)) {
@@ -78,12 +91,11 @@ export class Cli {
         process.exit(0);
       }
 
-      name = response;
+      const safeResponse = (response as string | undefined) || "";
+      name = safeResponse.trim() === "" ? defaultName : safeResponse.trim().toLowerCase().replace(/\s+/g, "-");
     }
 
-    const formattedName = name.toLowerCase().replace(/\s+/g, "-");
-    await this.newProject.new(formattedName);
-
-    outro(`✅ Project "${formattedName}" created successfully!`);
+    await this.newProject.new(name);
+    outro(`✅ Project "${name}" created successfully!`);
   }
 }

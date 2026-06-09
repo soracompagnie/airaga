@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
-    "outDir": "../../dist/parser",
+    "composite": true,
+    "declaration": true,
+    "outDir": "./dist",
     "paths": {
       "@airaga/parser/*": ["./src/*"],
     },
     "rootDir": "src",
     "types": ["node"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts"],
