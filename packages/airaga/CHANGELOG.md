@@ -1,5 +1,11 @@
 # airaga
 
+## 0.0.2
+
+### Patch Changes
+
+- feat: Enable hot-reload in development mode and base rendering engine.
+
 ## 0.0.1
 
 ### Patch Changes
