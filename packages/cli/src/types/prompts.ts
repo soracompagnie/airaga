@@ -96,7 +96,9 @@ export abstract class Prompts {
    * @returns {string} - The computed path to the project folder.
    */
   public get folder(): string {
-    return this.gameName === "." ? this.process.cwd() : this.path.join(this.process.cwd(), this.gameName);
+    return this.gameName === "."
+      ? this.process.cwd()
+      : this.path.join(this.process.cwd(), this.gameName);
   }
 
   /**
@@ -116,6 +118,9 @@ export abstract class Prompts {
   /**
    * @description - Abstract method to generate an IFID.
    * @returns {Promise<void>} - A promise that resolves when the IFID generation is complete.
+   * @deprecated
+   * @since 0.0.2 - This method is deprecated and may be removed in future versions.
+   *        Use the appropriate IFID generation tool instead.
    */
   public generate?(): Promise<void>;
 

@@ -1,5 +1,4 @@
-import { createNode } from "@airaga/parser/helpers/create-node.js";
-import type { ArgAttributes, ArgNode } from "@airaga/parser/types/ast.js";
+import { type ArgAttributes, type ArgNode, createNode } from "@airaga/parser";
 
 export class Scene {
   /**
@@ -11,7 +10,10 @@ export class Scene {
    * @returns {ArgNode}
    * @example <scene id="start">...</scene>
    */
-  public static scene(props?: ArgAttributes, children: ArgNode[] = []): ArgNode {
+  public static scene(
+    props?: ArgAttributes,
+    children: ArgNode[] = [],
+  ): ArgNode {
     return createNode("scene", "", props, children);
   }
 

@@ -1,24 +1,72 @@
-import { attributeRegex } from "@airaga/parser/constants/attributes.js";
-import { createNode } from "@airaga/parser/helpers/create-node.js";
-import type { ArgAttributes, ArgNode, ArgNodeType } from "@airaga/parser/types/ast.js";
+import {
+  type ArgAttributes,
+  type ArgNode,
+  type ArgNodeType,
+  createNode,
+} from "@airaga/parser";
 
 export class Parser {
   /**
-   * Set of self-closing or void elements that cannot have children.
+   * @description A set of void elements that do not require closing tags.
+   *              This is used to determine if a tag is self-closing during parsing.
+   * @type {Set<string>} - A set of lowercase tag names that are considered void elements.
+   * @remarks This list can be extended based on the needs of the project, but it includes
+   *          common HTML void elements and media tags that are often self-closing.
    */
-  private static readonly VOID_ELEMENTS = new Set(["input", "img", "br", "checkbox", "audio", "video"]);
+  private static readonly VOID_ELEMENTS = new Set([
+    "input",
+    "img",
+    "br",
+    "checkbox",
+    "audio",
+    "video",
+  ]);
 
   /**
-   * Parses a raw attributes string into an ArgAttributes object.
+   * @description A regular expression to match HTML-like attributes in a tag. It supports:
+   *              - Double-quoted attributes (e.g., key="value")
+   *              - Single-quoted attributes (e.g., key='value')
+   *              - Unquoted attributes (e.g., key)
+   * @type {RegExp} - A global regular expression to extract attribute key-value pairs from a string.
+   * @remarks The regex captures the attribute name and value in different groups depending on the quoting style.
+   *          It also allows for boolean attributes (e.g., disabled) which are treated as true.
+   */
+  private static readonly ATTRIBUTE_REGEX: RegExp =
+    /([a-zA-Z0-9-]+)="([^"]*)"|([a-zA-Z0-9-]+)='([^']*)'|([a-zA-Z0-9-]+)/g;
+
+  /**
+   * @description Recursively traverses the AST and replaces original media sources with hashed paths.
+   * @param {ArgNode[]} nodes - The array of AST nodes to process.
+   * @param {Record<string, string>} manifest - The asset manifest dictionary.
+   */
+  public static applyManifest(
+    nodes: ArgNode[],
+    manifest: Record<string, string>,
+  ): void {
+    for (const node of nodes) {
+      const src = node.props?.src as string | undefined;
+
+      if (src && manifest[src] && node.props) {
+        node.props.src = manifest[src];
+      }
+
+      if (node.children?.length) {
+        this.applyManifest(node.children, manifest);
+      }
+    }
+  }
+
+  /**
+   * @description Parses a raw attributes string into an ArgAttributes object.
    * @param {string} attributes - Raw string of HTML-like attributes.
    * @returns {ArgAttributes} Parsed attributes object.
    */
   private static parseAttributes(attributes: string): ArgAttributes {
     const props: ArgAttributes = {};
     let match: RegExpExecArray | null;
-    attributeRegex.lastIndex = 0;
+    this.ATTRIBUTE_REGEX.lastIndex = 0;
 
-    while ((match = attributeRegex.exec(attributes)) !== null) {
+    while ((match = this.ATTRIBUTE_REGEX.exec(attributes)) !== null) {
       const key = match[1] || match[3] || match[5];
       const value = match[2] || match[4] || "true";
 
@@ -34,23 +82,15 @@ export class Parser {
   }
 
   /**
-   * Parses a raw string from an .arg file into an Abstract Syntax Tree (AST)
-   * using a stack-based approach.
+   * @description Parses a raw string from an .arg file into an Abstract Syntax Tree (AST).
    * @param {string} input - The raw string content from the file.
    * @returns {ArgNode[]} An array of ArgNode objects representing the root elements.
    */
   public static parse(input: string): ArgNode[] {
     const rootNodes: ArgNode[] = [];
     const stack: ArgNode[] = [];
-
-    /**
-     * Regex capture groups:
-     * 1: Closing slash (if any) -> /
-     * 2: Tag name               -> scene, h1, input
-     * 3: Attributes string      -> name="hero" mood="happy"
-     * 4: Self-closing slash     -> /
-     */
     const tagRegex = /<(\/)?([a-zA-Z0-9-]+)([^>]*?)(\/?)>/g;
+
     let lastIndex = 0;
     let match: RegExpExecArray | null;
 
@@ -60,18 +100,20 @@ export class Parser {
 
       if (normalizedText && stack.length > 0) {
         const parent = stack[stack.length - 1];
-        parent.content = parent.content ? `${parent.content} ${normalizedText}` : normalizedText;
+        parent.content = `${parent.content || ""} ${normalizedText}`.trim();
       }
 
       const isClosingTag = !!match[1];
       const tagName = match[2].toLowerCase() as ArgNodeType;
       const attributes = match[3].trim();
       const isExplicitlySelfClosing = !!match[4];
-      const isVoidElement = this.VOID_ELEMENTS.has(tagName) || isExplicitlySelfClosing;
+      const isVoidElement =
+        this.VOID_ELEMENTS.has(tagName) || isExplicitlySelfClosing;
+
+      lastIndex = tagRegex.lastIndex;
 
       if (isClosingTag) {
         stack.pop();
-        lastIndex = tagRegex.lastIndex;
         continue;
       }
 
@@ -86,11 +128,7 @@ export class Parser {
         rootNodes.push(node);
       }
 
-      if (!isVoidElement) {
-        stack.push(node);
-      }
-
-      lastIndex = tagRegex.lastIndex;
+      if (!isVoidElement) stack.push(node);
     }
 
     return rootNodes;

@@ -1,5 +1,4 @@
-import { createNode } from "@airaga/parser/helpers/create-node.js";
-import type { ArgAttributes, ArgNode } from "@airaga/parser/types/ast.js";
+import { type ArgAttributes, type ArgNode, createNode } from "@airaga/parser";
 
 /**
  * @description Heading elements (h1 to h6) are used to define the structure and

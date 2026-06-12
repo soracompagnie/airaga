@@ -1,5 +1,4 @@
-import { createNode } from "@airaga/parser/helpers/create-node.js";
-import type { ArgAttributes, ArgNode } from "@airaga/parser/types/ast.js";
+import { type ArgAttributes, type ArgNode, createNode } from "@airaga/parser";
 
 export class Media {
   /**
@@ -22,7 +21,11 @@ export class Media {
    * @returns {ArgNode}
    * @example <img src="/assets/hero.png" alt="Hero Portrait" />
    */
-  public static img(src: string, alt: string = "", props?: ArgAttributes): ArgNode {
+  public static img(
+    src: string,
+    alt: string = "",
+    props?: ArgAttributes,
+  ): ArgNode {
     return createNode("img", "", { ...props, src, alt });
   }
 

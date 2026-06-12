@@ -1,7 +1,7 @@
+import type { Config } from "airaga";
 import { VERSION } from "@airaga/cli/constants/version.js";
 import { PackageJson } from "@airaga/cli/helpers/generate-package-json.js";
 import { Readme } from "@airaga/cli/helpers/generate-readme.js";
-import { Config } from "@airaga/cli/types/config.js";
 import { Prompts } from "@airaga/cli/types/prompts.js";
 import { v4 } from "uuid";
 import { execSync } from "node:child_process";
@@ -57,10 +57,15 @@ export class New extends Prompts {
       author: "Your Name",
     };
 
-    this.fs.mkdirSync(this.path.join(this.folder, "public"), { recursive: true });
+    this.fs.mkdirSync(this.path.join(this.folder, "public"), {
+      recursive: true,
+    });
 
     const __dirname = this.path.dirname(fileURLToPath(import.meta.url));
-    const faviconPath = this.path.resolve(resolve(__dirname, "../../assets"), "favicon.ico");
+    const faviconPath = this.path.resolve(
+      resolve(__dirname, "../../assets"),
+      "favicon.ico",
+    );
 
     if (this.fs.existsSync(faviconPath) === false) {
       this.console.error(`❌ Default favicon.ico not found at: ${faviconPath}`);
@@ -68,14 +73,21 @@ export class New extends Prompts {
     }
 
     try {
-      this.fs.copyFileSync(faviconPath, this.path.join(this.folder, "public", "favicon.ico"));
+      this.fs.copyFileSync(
+        faviconPath,
+        this.path.join(this.folder, "public", "favicon.ico"),
+      );
     } catch (err) {
       this.console.error(`❌ Failed to copy favicon: ${err}`);
       this.process.exit(1);
     }
 
-    this.fs.mkdirSync(this.path.join(this.folder, "src", "menu"), { recursive: true });
-    this.fs.mkdirSync(this.path.join(this.folder, "src", "scene"), { recursive: true });
+    this.fs.mkdirSync(this.path.join(this.folder, "src", "menu"), {
+      recursive: true,
+    });
+    this.fs.mkdirSync(this.path.join(this.folder, "src", "scene"), {
+      recursive: true,
+    });
 
     this.fs.writeFileSync(
       this.path.join(this.folder, "src", "menu", "start.arg"),
@@ -117,17 +129,29 @@ export class New extends Prompts {
         import type { Config } from "airaga";
 
         export const config: Config = {
-          ifid: "${init.ifid}", 
+          /** The unique identifier for the game. */
+          ifid: "${init.ifid}",
+
+          /** The name of the game. */
           name: "${init.name}",
+
+          /** A brief description of the game. */
           description: "${init.description}",
+
+          /** The version of the game. */
           version: "${init.version}",
+
+          /** The author of the game. */
           author: "${init.author}",
         };
       `,
       ),
     );
 
-    this.fs.writeFileSync(this.path.join(this.folder, ".gitignore"), "node_modules\ndist\n.env");
+    this.fs.writeFileSync(
+      this.path.join(this.folder, ".gitignore"),
+      "node_modules\ndist\n.env",
+    );
 
     // Create package.json and README.md
     this.packageJson.write();
@@ -136,13 +160,17 @@ export class New extends Prompts {
     try {
       execSync("git init", { cwd: this.folder, stdio: "ignore" });
       this.console.log("✅ Initialized empty Git repository.");
-      this.console.log(`\n🎉 Project "${gameName}" has been successfully created!`);
+      this.console.log(
+        `\n🎉 Project "${gameName}" has been successfully created!`,
+      );
       this.console.log(`\nNext steps:`);
       this.console.log(`  cd ${gameName}`);
       this.console.log(`  bun install`);
       this.console.log(`  bun airaga dev\n`);
     } catch (err: unknown) {
-      this.console.error(`❌ Failed to initialize git: ${(err as Error).message}`);
+      this.console.error(
+        `❌ Failed to initialize git: ${(err as Error).message}`,
+      );
     }
   }
 }

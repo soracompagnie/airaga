@@ -1,4 +1,4 @@
-import type { ArgAttributes, ArgNode, ArgNodeType } from "@airaga/parser/types/ast.js";
+import type { ArgAttributes, ArgNode, ArgNodeType } from "@airaga/parser";
 
 /**
  * @description Helper utility to generate an Airaga Node for the AST.

@@ -57,7 +57,7 @@ Scaffolds a fresh Airaga game project.
 - Creates a new directory with the specified project name.
 - Generates the default folder structure (e.g., `src/`, `public/`, `assets/`).
 - Creates a boilerplate `.arg` file to help you start writing your game immediately.
-- Automatically installs the necessary dependencies (`@airaga/parser`, `@airaga/runtime`, etc.).
+- Automatically installs the necessary dependencies (`@airaga/media`, `@airaga/parser`, etc.).
 
 **`dev`**
 

@@ -13,6 +13,5 @@
   "material-icon-theme.folders.associations": {
     "airaga": "core",
     "parser": "temp",
-    "runtime": "generator",
-  }
+  },
 }

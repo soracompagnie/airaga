@@ -1,12 +1,24 @@
 {
   "name": "@airaga/media",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.js",
   "private": true,
   "type": "module",
   "types": "./dist/index.d.ts",
   "version": "0.0.1",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "devDependencies": {
+    "airaga": "workspace:*",
+    "@airaga/cli": "workspace:*",
+    "@airaga/media": "workspace:*",
+    "@airaga/parser": "workspace:*",
     "@types/bun": "latest"
   },
   "peerDependencies": {

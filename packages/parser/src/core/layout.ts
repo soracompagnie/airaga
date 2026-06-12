@@ -1,5 +1,4 @@
-import { createNode } from "@airaga/parser/helpers/create-node.js";
-import type { ArgAttributes, ArgNode } from "@airaga/parser/types/ast.js";
+import { type ArgAttributes, type ArgNode, createNode } from "@airaga/parser";
 
 export class Layout {
   /**
@@ -29,7 +28,10 @@ export class Layout {
    * @param {ArgNode[]} children - The child elements inside the section.
    * @returns {ArgNode}
    */
-  public static section(props?: ArgAttributes, children: ArgNode[] = []): ArgNode {
+  public static section(
+    props?: ArgAttributes,
+    children: ArgNode[] = [],
+  ): ArgNode {
     return createNode("section", "", props, children);
   }
 

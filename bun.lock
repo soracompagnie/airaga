@@ -24,6 +24,7 @@
         "tsx": "^4.22.4",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.61.0",
+        "vite": "8.0.16",
         "vite-tsconfig-paths": "^6.1.1",
         "vitest": "^4.1.8",
       },
@@ -32,6 +33,9 @@
       "name": "airaga",
       "version": "0.0.1",
       "devDependencies": {
+        "@airaga/cli": "workspace:*",
+        "@airaga/media": "workspace:*",
+        "@airaga/parser": "workspace:*",
         "@types/bun": "latest",
       },
       "peerDependencies": {
@@ -45,8 +49,11 @@
         "airaga": "./dist/index.js",
       },
       "dependencies": {
+        "@airaga/media": "workspace:*",
+        "@airaga/parser": "workspace:*",
         "@clack/prompts": "^0.11.0",
         "@faker-js/faker": "^10.4.0",
+        "airaga": "workspace:*",
         "dedent": "^1.6.0",
         "uuid": "^11.1.0",
       },
@@ -59,7 +66,11 @@
       "name": "@airaga/media",
       "version": "0.0.1",
       "devDependencies": {
+        "@airaga/cli": "workspace:*",
+        "@airaga/media": "workspace:*",
+        "@airaga/parser": "workspace:*",
         "@types/bun": "latest",
+        "airaga": "workspace:*",
       },
       "peerDependencies": {
         "typescript": "^5",
@@ -69,20 +80,23 @@
       "name": "@airaga/parser",
       "version": "0.0.1",
       "devDependencies": {
+        "@airaga/cli": "workspace:*",
+        "@airaga/media": "workspace:*",
         "@types/bun": "latest",
+        "airaga": "workspace:*",
       },
       "peerDependencies": {
         "typescript": "^5",
       },
     },
-    "packages/runtime": {
-      "name": "@airaga/runtime",
+    "playground/next-hastily-whoever": {
+      "name": "next-hastily-whoever",
       "version": "0.0.1",
       "devDependencies": {
-        "@types/bun": "latest",
-      },
-      "peerDependencies": {
-        "typescript": "^5",
+        "@airaga/cli": "^0.0.1",
+        "@types/node": "latest",
+        "airaga": "^0.0.1",
+        "typescript": "latest",
       },
     },
   },
@@ -95,9 +109,6 @@
     ],
     "@airaga/parser": [
       "@airaga/parser@workspace:packages/parser"
-    ],
-    "@airaga/runtime": [
-      "@airaga/runtime@workspace:packages/runtime"
     ],
     "@asamuzakjp/css-color": [
       "@asamuzakjp/css-color@5.1.11",
@@ -3331,6 +3342,9 @@
       {},
       "sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw=="
     ],
+    "next-hastily-whoever": [
+      "next-hastily-whoever@workspace:playground/next-hastily-whoever"
+    ],
     "normalize-path": [
       "normalize-path@3.0.0",
       "",
@@ -4379,6 +4393,16 @@
       {},
       "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="
     ],
+    "@airaga/cli/@types/node": [
+      "@types/node@25.9.3",
+      "",
+      {
+        "dependencies": {
+          "undici-types": ">=7.24.0 <7.24.7"
+        }
+      },
+      "sha512-603BddQMv3pUcr4U2dhujk83N2tTDVr/34wII2B6bJy6g+8WD6yUb11jszNs0gdi4PesVWl7ABt8nYMVpnLUcg=="
+    ],
     "@changesets/apply-release-plan/prettier": [
       "prettier@2.8.8",
       "",
@@ -4552,6 +4576,16 @@
       "",
       {},
       "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA=="
+    ],
+    "next-hastily-whoever/@types/node": [
+      "@types/node@25.9.3",
+      "",
+      {
+        "dependencies": {
+          "undici-types": ">=7.24.0 <7.24.7"
+        }
+      },
+      "sha512-603BddQMv3pUcr4U2dhujk83N2tTDVr/34wII2B6bJy6g+8WD6yUb11jszNs0gdi4PesVWl7ABt8nYMVpnLUcg=="
     ],
     "read-yaml-file/js-yaml": [
       "js-yaml@3.14.2",

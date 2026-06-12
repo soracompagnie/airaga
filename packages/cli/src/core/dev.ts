@@ -1,4 +1,6 @@
+import { Build } from "@airaga/cli/core/build.js";
 import { Prompts } from "@airaga/cli/types/prompts.js";
+import { createServer } from "vite";
 
 /**
  * @description - The `Dev` class handles the development server functionality for the Airaga game engine.
@@ -12,32 +14,53 @@ import { Prompts } from "@airaga/cli/types/prompts.js";
  */
 export class Dev extends Prompts {
   public async dev(): Promise<void> {
-    const startPath = this.path.join(this.process.cwd(), "src", "menu", "start.arg");
+    const builder = new Build();
 
-    if (!this.fs.existsSync(startPath)) {
-      this.console.error("❌ Fatal Error: `start.arg` file is missing in the `src` directory.");
-      this.process.exit(1);
-    }
+    builder.context({
+      console: this.console,
+      process: this.process,
+      fs: this.fs,
+      path: this.path,
+      dedent: this.dedent,
+    });
 
-    try {
-      const startContent = this.fs.readFileSync(startPath, "utf-8").trim();
+    await builder.build();
 
-      if (!startContent || startContent.length === 0) {
-        this.console.error("❌ `start.arg` file is empty. Please specify the starting scene.");
-        this.process.exit(1);
-      }
+    const server = await createServer({
+      configFile: false,
+      root: this.path.join(this.process.cwd(), ".airaga"),
+      server: { port: 3227, open: true },
+      plugins: [
+        {
+          name: "airaga",
+          transformIndexHtml(html): string {
+            return html.replace(
+              "</head>",
+              `
+            <script type="module">
+              import.meta.hot?.on('bundle-update', (data) => window.location.reload());
+            </script>
+            </head>
+          `,
+            );
+          },
+        },
+      ],
+    });
 
-      if (!startContent.endsWith(".arg")) {
-        this.console.error(`❌ Invalid entry point in \`start.arg\`. Expected a .arg file, got: "${startContent}"`);
-        this.process.exit(1);
-      }
+    await server.listen();
+    server.printUrls();
 
-      this.console.log(`✅ Starting development server with entry point: ${startContent}`);
-
-      // TODO: Implement the logic to start the development server using the specified entry point.
-    } catch (error) {
-      this.console.error(`❌ Failed to read entry point: ${(error as Error).message}`);
-      this.process.exit(1);
-    }
+    this.fs.watch(
+      this.path.join(this.process.cwd(), "src"),
+      { recursive: true },
+      async (_, filename) => {
+        if (filename?.endsWith(".arg")) {
+          console.log(`\n🔄 ${filename} berubah. Rebuilding...`);
+          await builder.build().catch(console.error);
+          server.ws.send({ type: "custom", event: "bundle-update" });
+        }
+      },
+    );
   }
 }

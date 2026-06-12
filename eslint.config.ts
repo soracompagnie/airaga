@@ -21,9 +21,20 @@ export default defineConfig([
       "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
       "@typescript-eslint/explicit-function-return-type": "warn",
       "@typescript-eslint/explicit-module-boundary-types": "warn",
-      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_" },
+      ],
       "@typescript-eslint/strict-boolean-expressions": "off",
     },
   },
-  { ignores: ["**/dist/**",  "node_modules/**",  "coverage/**",  "eslint.config.ts"] },
+  {
+    ignores: [
+      "**/dist/**",
+      "node_modules/**",
+      "coverage/**",
+      "eslint.config.ts",
+      "**/*.d.ts",
+    ],
+  },
 ]);
